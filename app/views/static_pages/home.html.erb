@@ -1,0 +1,66 @@
+<% provide(:title, 'Home')%>
+
+<% if signed_in? %>
+	<div class="row">
+		<aside class="span4">
+			<section>
+				<%= render 'shared/user_info' %>
+			</section>
+			<section>
+				<%= render 'shared/stats' %>
+			</section>	
+			<section>
+				 <%= render 'shared/micropost_form' %>
+			</section>	
+			<section>
+				<p>My recent contributions...</p>
+				<%= render 'shared/new_books' %>
+			</section>
+		
+		</aside>
+		<div class="span8">
+			<section>
+				<h3>Micropost Feed</h3>
+				<%= render 'shared/feed' %>
+			</section>
+			<section>
+				<% if @user.books.any? %>
+				<h3>My Books</h3>
+				<ol class="microposts">
+					<%= render @books %>
+				</ol>
+				<%= will_paginate @books %>
+				<% end %>
+			</section>
+		</div>	
+	</div>
+<% else %>		
+<div class="center hero-unit">
+
+	<h1>The Great War's Essential Reading List</h1>
+
+	<h2>The most complete reference of books about the Great War.
+		</h2>
+		
+		<div class="row">
+			<div class= "span6 offset3">
+				
+				<%= form_for(:session, url: sessions_path) do |f| %>
+
+					<%= f.text_field :email, :placeholder => "email" %></br>
+
+		  			<%= f.password_field :password , :placeholder => "password" %></br>
+
+					<%= f.submit "Sign in", class: "btn btn-large btn-primary" %>
+				<% end %>
+
+				<p>New user? <%= link_to "Sign up now!", signup_path %></p>
+			</div>
+		</div>
+		<%= link_to image_tag("gwerl.png", alt: "Gwerl") %>
+</div>
+	
+<iframe src="http://www.facebook.com/plugins/like.php?href=http://essentialreadinglist.heroku.com/"
+        scrolling="no" frameborder="0"
+        style="border:none; width:450px; height:70px"></iframe>
+<% end %>

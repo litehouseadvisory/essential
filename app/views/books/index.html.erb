@@ -1,0 +1,43 @@
+<% provide(:title, "All the Books") %>
+
+<div class="row">
+	<aside class="span3">
+		
+		<section>
+			<h3>Search the GWERL</h3>
+		</section>
+
+		<section>
+			<%= search_form_for @q do |f| %>
+				<%= f.text_field :title_cont, :placeholder => "title"  %>
+				<%= f.text_field :authors_cont, :placeholder => "author"  %>
+				<%= f.text_field :publisher_cont, :placeholder => "publisher"  %>
+				<%= f.text_field :identifier_cont, :placeholder => "isbn, asin, olid"  %>
+				 <%= f.submit class: "btn" %>
+				<% end %>
+		</section>
+		<% if signed_in? %>
+			<section>
+				<%= link_to "Add new book", new_book_path, class: "btn btn-large btn-primary" %>
+			</section>	
+		<% end %>
+		<section>
+			<h3>Recently added...</h3>
+			<%= render 'shared/new_books' %>
+		</section>
+				
+	</aside>
+	<div class="span8">
+		<h3>The Great War's Essential Reading List</h3>
+		<%= will_paginate @books%>
+
+		<ul class="books">
+				<%= render @books %>
+		</ul>
+
+		<%= will_paginate @books %>
+	</div>	
+</div>
+
+
+
